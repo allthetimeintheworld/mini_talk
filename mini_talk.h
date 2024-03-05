@@ -6,7 +6,7 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:13:09 by jadyar            #+#    #+#             */
-/*   Updated: 2024/03/05 14:23:16 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/03/05 14:39:13 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <sys/types.h>
 
 typedef struct s_sig

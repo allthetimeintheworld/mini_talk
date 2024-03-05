@@ -6,7 +6,7 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:03:54 by jadyar            #+#    #+#             */
-/*   Updated: 2024/03/05 13:50:40 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/03/05 14:42:40 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	var_init(t_sig *var)
 	var->pos = 0;
 }
 
-static	void	action(int signal, siginfo_t *info, void *context)
+static void	action(int signal, siginfo_t *info, void *context)
 {
 	static t_sig	message;
 
@@ -44,11 +44,11 @@ static	void	action(int signal, siginfo_t *info, void *context)
 		message.value = message.value << 1;
 }
 
-	// sigaction() system call is used to change the action taken
-	//by a process on receipt of a specific signal
-	// act: new action to be taken when the signal is received
-	// oldact: old action taken by the process when the signal was received
-	// returns 0 on success, -1 on error
+// sigaction() system call is used to change the action taken
+// by a process on receipt of a specific signal
+// act: new action to be taken when the signal is received
+// oldact: old action taken by the process when the signal was received
+// returns 0 on success, -1 on error
 /* int	sigaction(int sigsum, struct sigaction *act, struct sigaction *oldact);
 {
 	if (sigaction(SIGUSR1, act, oldact) < 0)
@@ -66,10 +66,10 @@ static	void	action(int signal, siginfo_t *info, void *context)
 int	main(void)
 {
 	__pid_t	pid;
-	struct sigaction;
 
-	pid = getpid();
+	struct sigaction;
 	sigaction = sa;
+	pid = getpid();
 	ft_putstr_fd("Server PID: ", STDOUT_FILENO);
 	ft_putbuf_fd(pid, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);

@@ -6,17 +6,16 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:03:46 by jadyar            #+#    #+#             */
-/*   Updated: 2024/03/05 13:49:33 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/03/05 14:40:08 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "mini_talk.h"
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "mini_talk.h"
 
-
-static	void	ft_exit_failure(void)
+static void	ft_exit_failure(void)
 {
 	ft_putstr_fd("%s\n", STDERR_FILENO);
 	exit(EXIT_FAILURE);
@@ -36,8 +35,6 @@ static void	action(int signal)
 		bytes_got++;
 		bytes_got = bytes_got << 1;
 	}
-
-
 }
 
 static void	send_signal(__pid_t pid, char *message)
