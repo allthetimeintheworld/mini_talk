@@ -6,42 +6,87 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:03:46 by jadyar            #+#    #+#             */
-/*   Updated: 2024/03/05 11:04:19 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/03/05 13:49:33 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "mini_talk.h"
 
-int	main(int argc, char *argv[])
+
+static	void	ft_exit_failure(void)
 {
-	pid_t	server_pid;
-	char	*message;
+	ft_putstr_fd("%s\n", STDERR_FILENO);
+	exit(EXIT_FAILURE);
+}
 
-	if (argc != 3)
+static void	action(int signal)
+{
+	static int	bytes_got;
+
+	bytes_got = 0;
+	if (signal == SIGUSR1)
 	{
-		printf("Usage: %s <server_pid> <string>\n", argv[0]);
-		return (1);
+		bytes_got++;
 	}
-	server_pid = atoi(argv[1]);
-	message = argv[2];
-	// Send each character of the message to the server using SIGUSR1 and SIGUSR2 signals
-	for (int i = 0; message[i] != '\0'; i++)
+	else if (signal == SIGUSR2)
 	{
-		for (int j = 0; j < 8; j++)
+		bytes_got++;
+		bytes_got = bytes_got << 1;
+	}
+
+
+}
+
+static void	send_signal(__pid_t pid, char *message)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (message[i] != '\0')
+	{
+		j = 0;
+		while (j < 8)
 		{
 			if ((message[i] >> j) & 1)
 			{
-				kill(server_pid, SIGUSR1); // Send SIGUSR1 for 1
+				kill(pid, SIGUSR1);
 			}
 			else
 			{
-				kill(server_pid, SIGUSR2); // Send SIGUSR2 for 0
+				kill(pid, SIGUSR2);
 			}
-			usleep(100); // Adjust this delay as needed
+			usleep(100);
+			j++;
 		}
+		i++;
 	}
-	printf("Message sent to server\n");
+}
+
+int	main(int argc, char *argv[])
+{
+	int		server_pid;
+	char	*message;
+
+	if (argc != 3)
+		ft_exit_failure();
+	server_pid = atoi(argv[1]);
+	message = argv[2];
+	if (!server_pid || !message)
+		ft_exit_failure();
+	ft_putstr_fd("Server PID: ", STDOUT_FILENO);
+	ft_putnbr_fd(server_pid, STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	ft_putstr_fd("Message recieved: ", STDOUT_FILENO);
+	signal(SIGUSR1, action);
+	signal(SIGUSR2, action);
+	send_signal(ft_atoi(argv[1]), argv[2]);
+	while (1)
+	{
+		pause();
+	}
 	return (0);
 }
