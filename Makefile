@@ -6,10 +6,9 @@
 #    By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 11:03:34 by jadyar            #+#    #+#              #
-#    Updated: 2024/03/05 14:45:15 by jadyar           ###   ########.fr        #
+#    Updated: 2024/03/07 13:04:22 by jadyar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 # Files
 SERVER_SRC		=	src/server.c \
@@ -72,15 +71,25 @@ all: $(NAME)
 
 $(NAME): comp_start ft_server ft_client
 
-comp_start:
-	@$(COMP_START)
+src/server.o: src/server.c
+	$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
-ft_server: $(SERVER_OBJS)
-	@$(GCC) $(FLAGS) $(SERVER_OBJS) -o $(SERVER_NAME)
+src/client.o: src/client.c
+	$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
+
+src/utils.o: src/utils.c
+	$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
+
+# Update dependencies for server and client executables
+$(SERVER_NAME): comp_start $(SERVER_OBJS)
+	@$(CC) $(FLAGS) $(SERVER_OBJS) -o $(SERVER_NAME)
 	@$(SERV_READY)
 
-ft_client: $(CLIENT_OBJS)
+$(CLIENT_NAME1): $(CLIENT_OBJS)
 	@$(CC) $(FLAGS) $(CLIENT_OBJS) -o $(CLIENT_NAME1)
+	@$(CLI_READY)
+
+$(CLIENT_NAME2): $(CLIENT_OBJS)
 	@$(CC) $(FLAGS) $(CLIENT_OBJS) -o $(CLIENT_NAME2)
 	@$(CLI_READY)
 
@@ -92,9 +101,6 @@ fclean: clean
 	@rm -rf $(SERVER_NAME) $(CLIENT_NAME1) $(CLIENT_NAME2)
 	@$(FCLEANED)
 
-.c.o:
-	@${CC} ${FLAGS} $(INCLUDE) -c $< -o ${<:.c=.o}
+re:	fclean all clean re
 
-re:	fclean all
-
-.PHONY: all minitalk server client clean fclean re
+.PHONY: all minitalk comp_start ft_server ft_client clean fclean re

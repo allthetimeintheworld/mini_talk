@@ -6,11 +6,11 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:20:38 by jadyar            #+#    #+#             */
-/*   Updated: 2024/03/05 14:18:00 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/03/07 12:02:46 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_talk.h"
+#include "../includes/minitalk.h"
 
 size_t	ft_strlen(const char *s)
 {

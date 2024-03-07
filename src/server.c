@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 11:03:54 by jadyar            #+#    #+#             */
-/*   Updated: 2024/03/05 14:42:40 by jadyar           ###   ########.fr       */
+/*   Created: 2024/03/07 11:07:59 by jadyar            #+#    #+#             */
+/*   Updated: 2024/03/07 12:14:12 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_talk.h"
-#include <signal.h>
+#include "../includes/minitalk.h"
+#include <stdio.h>
 
 void	var_init(t_sig *var)
 {
@@ -65,18 +65,18 @@ static void	action(int signal, siginfo_t *info, void *context)
 
 int	main(void)
 {
-	__pid_t	pid;
+	struct sigaction	sa;
+	pid_t				pid;
 
-	struct sigaction;
-	sigaction = sa;
+
 	pid = getpid();
 	ft_putstr_fd("Server PID: ", STDOUT_FILENO);
-	ft_putbuf_fd(pid, STDOUT_FILENO);
+	ft_putnbr_fd(pid, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
-	sa->sa_handler = action;
-	sa->sa_flags = SA_SIGINFO;
-	sigaction(SIGUSR1, sighandler);
-	signal(SIGUSR2, sighandler);
+	sa.sa_sigaction = action;
+	sa.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	while (1)
 	{

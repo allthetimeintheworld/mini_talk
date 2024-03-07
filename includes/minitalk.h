@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_talk.h                                        :+:      :+:    :+:   */
+/*   minitalk.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:13:09 by jadyar            #+#    #+#             */
-/*   Updated: 2024/03/05 14:39:13 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/03/07 11:09:16 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_TALK_H
-# define MINI_TALK_H
+#ifndef MINITALK_H
+# define MINITALK_H
 
 # include <signal.h>
 # include <unistd.h>

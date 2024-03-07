@@ -6,38 +6,34 @@
 /*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:03:46 by jadyar            #+#    #+#             */
-/*   Updated: 2024/03/05 14:40:08 by jadyar           ###   ########.fr       */
+/*   Updated: 2024/03/07 12:07:18 by jadyar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_talk.h"
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "../includes/minitalk.h"
 
-static void	ft_exit_failure(void)
+void	ft_exit_failure(void)
 {
-	ft_putstr_fd("%s\n", STDERR_FILENO);
+	ft_putstr_fd("Use case: \"./client SERVER_PID MESSAGE\" \n", STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
 
-static void	action(int signal)
+void	action(int signal)
 {
 	static int	bytes_got;
 
 	bytes_got = 0;
 	if (signal == SIGUSR1)
-	{
 		bytes_got++;
-	}
-	else if (signal == SIGUSR2)
+	else
 	{
-		bytes_got++;
-		bytes_got = bytes_got << 1;
+		ft_putnbr_fd(bytes_got, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		exit(EXIT_SUCCESS);
 	}
 }
 
-static void	send_signal(__pid_t pid, char *message)
+void	send_signal(pid_t pid, char *message)
 {
 	int	i;
 	int	j;
@@ -65,17 +61,15 @@ static void	send_signal(__pid_t pid, char *message)
 
 int	main(int argc, char *argv[])
 {
-	int		server_pid;
-	char	*message;
+	int		message;
 
 	if (argc != 3)
 		ft_exit_failure();
-	server_pid = atoi(argv[1]);
-	message = argv[2];
-	if (!server_pid || !message)
+	message = ft_strlen(argv[2]);
+	if (!message || !ft_atoi(argv[1]))
 		ft_exit_failure();
 	ft_putstr_fd("Server PID: ", STDOUT_FILENO);
-	ft_putnbr_fd(server_pid, STDOUT_FILENO);
+	ft_putnbr_fd(message, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	ft_putstr_fd("Message recieved: ", STDOUT_FILENO);
 	signal(SIGUSR1, action);
